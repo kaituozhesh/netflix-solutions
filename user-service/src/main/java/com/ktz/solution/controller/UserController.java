@@ -2,9 +2,13 @@ package com.ktz.solution.controller;
 
 import com.ktz.solution.domain.CommonResult;
 import com.ktz.solution.domain.User;
+import com.ktz.solution.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @ClassName UserController
@@ -18,13 +22,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/create")
     public CommonResult create(@RequestBody User user) {
         return new CommonResult("操作成功", 200);
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     public CommonResult<User> getUser(@PathVariable Long id) {
         User user = new User();
         user.setId(id);
@@ -34,5 +40,10 @@ public class UserController {
         return new CommonResult<>(user);
     }
 
-
+    @GetMapping("/getUserByIds")
+    public CommonResult<List<User>> getUserByIds(@RequestParam List<Long> ids) {
+        List<User> userList = userService.getUserByIds(ids);
+        logger.info("根据ids获取用户信息，用户列表为：{}", userList);
+        return new CommonResult<>(userList);
+    }
 }
