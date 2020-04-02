@@ -37,6 +37,7 @@
         <module>ribbon-service</module>
         <module>hystrix-service</module>
         <module>hystrix-dashboard</module>
+        <module>turbine-service</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
