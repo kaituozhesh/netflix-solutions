@@ -30,7 +30,7 @@ public class UserController {
         return new CommonResult("操作成功", 200);
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public CommonResult<User> getUser(@PathVariable Long id) {
         User user = new User();
         user.setId(id);
