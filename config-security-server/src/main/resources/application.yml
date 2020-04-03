@@ -8,8 +8,8 @@ spring:
       server:
         git:
           uri: https://github.com/kaituozhesh/springcloud-config.git
-          username: kaituozhesh
-          password: kaituozhe1.
+          username: asd
+          password: asd
           clone-on-start: true
   security:
     user:

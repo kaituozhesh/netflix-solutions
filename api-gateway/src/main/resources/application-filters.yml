@@ -1,0 +1,16 @@
+server:
+  port: 9201
+service-url:
+  user-service: http://localhost:8201
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: path_route # 路由的ID
+          uri: ${service-url.user-service}/user/{id}  # 匹配后路由地址
+          filters:
+            - AddRequestParameter=username,admin # 给请求添加参数的过滤器 ?username=admin
+            - StripPrefix=2  # 对指定数量的路径前缀进行去除的过滤器http://localhost:9201/user-service/a/user/1相当于http://localhost:8201/user/1
+            - PrefixPath=/user  # 对所有请求增加前缀   http://localhost:9201/1 -> http://localhost:8201/user/1
+          predicates:  # 断言,路径相匹配的进行路由
+            - Path=/user-service/**

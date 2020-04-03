@@ -43,6 +43,7 @@
         <module>config-server</module>
         <module>config-client</module>
         <module>config-security-server</module>
+        <module>api-gateway</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

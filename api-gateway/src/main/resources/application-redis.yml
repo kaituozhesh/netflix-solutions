@@ -1,0 +1,23 @@
+server:
+  port: 9201
+spring:
+  redis:
+    host: localhost
+    password: 123456
+    port: 6379
+  cloud:
+    gateway:
+      routes:
+        - id: requestratelimiter_route
+          uri: http://localhost:8201
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 2
+                key-resolver: "#{@ipKeyResolver}"
+          predicates:
+            - Method=GET
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

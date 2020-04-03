@@ -46,4 +46,10 @@ public class UserController {
         logger.info("根据ids获取用户信息，用户列表为：{}", userList);
         return new CommonResult<>(userList);
     }
+
+    @GetMapping("/getByUsername")
+    public CommonResult<User> getByUsername(@RequestParam String username) {
+        User user = userService.getByUsername(username);
+        return new CommonResult<>(user);
+    }
 }
