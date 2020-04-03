@@ -40,6 +40,8 @@
         <module>turbine-service</module>
         <module>feign-service</module>
         <module>zuul-proxy</module>
+        <module>config-server</module>
+        <module>config-client</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
