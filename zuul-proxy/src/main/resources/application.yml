@@ -1,0 +1,34 @@
+server:
+  port: 8801
+spring:
+  application:
+    name: zuul-proxy
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+# 配置路由规则
+# 将/userService/**的请求路由到user-service服务上去
+# 将/feignService/**的请求路由到feign-service服务上去
+# 访问http://localhost:8801/userService/user/1 可以发现请求路由到user-service上了
+# 默认以服务名称来匹配路径  相当于 http://localhost:8801/user-service/user/1也能访问
+zuul:
+  ignored-services: user-service,feign-service # 关闭默认路由配置
+  prefix: /proxy   # 给网关路由添加前缀    这样我们需要访问http://localhost:8801/proxy/user-service/user/1才能访问到user-service中的接口
+  sensitive-headers: Cookie,Set-Cookie,Authorization # 配置过了敏感的请求头信息,设置为空就不会过滤
+  add-host-header: true  # 设置为true重定向是会添加host请求头
+  routes:
+    user-service:
+      path: /userService/**
+    feign-service:
+      path: /feignService/**
+  PreLogFilter:
+    pre:
+      disable: true # 禁用PreLogFilter的过滤配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'routes'
